@@ -2,12 +2,12 @@
   <Form ref="vForm" :rules="rules" :model="formData">
     <FormItem
       :label="formData.name.label"
-      name="name"
-      v-if="formData.name.showVisible"
+      :name="formData.name.field"
+      v-if="!formData.name.componentProp.hidden"
     >
       <Input
-        v-model:value="formData.name.initialValue"
-        :disabled="formData.name.disabled"
+        v-model:value="formData.name.componentProp.defaultValue"
+        :disabled="formData.name.componentProp.disabled"
       />
     </FormItem>
     <FormItem :wrapper-col="{ span: 14, offset: 4 }">
@@ -18,8 +18,8 @@
 </template>
 
 <script lang="ts">
-/* 注： 这里不允许使用setup语法 */
-import { defineComponent, toRefs, reactive, getCurrentInstance } from "vue"
+/* 注： 这里不建议使用setup语法 */
+import { defineComponent, toRefs, reactive, getCurrentInstance } from "vue";
 import {
   ConfigProvider,
   Form,
@@ -35,11 +35,11 @@ import {
   Select,
   DatePicker,
   Input,
-} from "ant-design-vue"
-import dayjs from "dayjs"
-import zhCN from "ant-design-vue/es/locale/zh_CN"
-import "dayjs/locale/zh-cn"
-dayjs.locale("zh-cn")
+} from "ant-design-vue";
+import dayjs from "dayjs";
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+import "dayjs/locale/zh-cn";
+dayjs.locale("zh-cn");
 export default defineComponent({
   components: {
     ConfigProvider,
@@ -61,10 +61,15 @@ export default defineComponent({
     const state = reactive({
       formData: {
         name: {
-          label: "姓名",
-          disabled: false,
-          showVisible: true,
-          initialValue: "",
+          id: "xdhsg",
+          type: "input",
+          field: "name",
+          label: "姓名" /*必须*/,
+          componentProp: {
+            defaultValue: "12323",
+            disabled: false,
+            hidden: false,
+          },
         },
       },
       rules: {
@@ -82,27 +87,27 @@ export default defineComponent({
           },
         ],
       },
-    })
-    const instance = getCurrentInstance()
+    });
+    const instance = getCurrentInstance();
     const submitForm = () => {
       instance?.ctx?.$refs["vForm"].validate().then((valid) => {
         debugger;
         if (!valid) return;
         //TODO: 提交表单
       });
-    }
+    };
     const resetForm = () => {
       instance?.ctx?.$refs["vForm"].resetFields();
-    }
+    };
     return {
-      // locale: zhCN,
+      locale: zhCN,
       ...toRefs(state),
       submitForm,
       resetForm,
-    }
+    };
   },
 });
 </script>
 <style scoped>
-/* 注 TODO: 这里支持less写法，但不建议使用，因为预览解析器暂时没适配*/
+/* 注 DOEN: 这里支持less写法*/
 </style>
