@@ -5,11 +5,7 @@ import { Store, ReplStore, SFCOptions } from "./store";
 import { provide, ref, toRef, computed } from "vue";
 import type { EditorComponentType } from "./editor/types";
 import EditorContainer from "./editor/EditorContainer.vue";
-import { useFullscreen } from "@vueuse/core";
-import {
-  FullscreenExitOutlined,
-  FullscreenOutlined,
-} from "@ant-design/icons-vue";
+
 
 export interface Props {
   theme?: "dark" | "light";
@@ -60,8 +56,6 @@ if (!props.editor) {
   throw new Error('The "editor" prop is now required.');
 }
 
-const editors = ref();
-const { isFullscreen, enter, exit, toggle } = useFullscreen();
 const outputRef = ref<InstanceType<typeof Output>>();
 const { store } = props;
 const sfcOptions = (store.options = props.sfcOptions || {});
@@ -106,14 +100,7 @@ defineExpose({ reload });
   <div class="vue-repl">
     <SplitPane :layout="layout">
       <template #[editorSlotName]>
-        <div
-          ref="editors"
-          style="width: 100%; height: 100%; position: relative;"
-        >
-          <FullscreenOutlined class="po" @click="exit" v-if="isFullscreen" />
-          <FullscreenExitOutlined class="po" @click="enter" v-else />
-          <EditorContainer :editorComponent="editor" />
-        </div>
+        <EditorContainer :editorComponent="editor" />
       </template>
       <template #[outputSlotName]>
         <Output
@@ -167,13 +154,5 @@ defineExpose({ reload });
   cursor: pointer;
   margin: 0;
   background-color: transparent;
-}
-.po {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  color: #333;
-  font-size: 20px;
-  z-index: 999999;
 }
 </style>

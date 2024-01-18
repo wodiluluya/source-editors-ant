@@ -141,8 +141,8 @@ export class ReplStore implements Store {
 
   constructor({
     serializedState = '',
-    defaultVueRuntimeURL = `https://cdn.jsdelivr.net/npm/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.js`,
-    defaultVueRuntimeProdURL = `https://cdn.jsdelivr.net/npm/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser.prod.js`,
+    defaultVueRuntimeURL = `/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-browser.js`,
+    defaultVueRuntimeProdURL = `/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-browser.prod.js`,
     defaultVueServerRendererURL = `https://cdn.jsdelivr.net/npm/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js`,
     showOutput = false,
     outputMode = 'preview',
@@ -381,15 +381,13 @@ export class ReplStore implements Store {
           {
             imports: {
               vue: this.defaultVueRuntimeURL,
-             // "vue": "/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-browser.prod.js",
+              //vue:'https://cdn.jsdelivr.net/npm/@vue/runtime-dom@3.4.5/dist/runtime-dom.esm-browser.js',
               "vue/server-renderer": "/node_modules/@vue/server-renderer/dist/server-renderer.esm-browser.js",
               "ant-design-vue": "/node_modules/ant-design-vue/dist/antd.esm.js",
               "@ant-design/icons-vue": "/node_modules/@ant-design/icons-vue/es/index.js",
               "dayjs": "/node_modules/dayjs/esm/index.js",
               "ant-design-vue/es/locale/zh_CN": "/node_modules/ant-design-vue/es/locale/zh_CN.js",
               "dayjs/locale/zh-cn": "/node_modules/dayjs/esm/locale/zh-cn.js",
-              "element-plus": "/node_modules/element-plus/dist/index.full.min.js",
-              //              // vue: this.defaultVueRuntimeURL,
             },
           },
           null,

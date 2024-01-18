@@ -252,6 +252,7 @@ async function updatePreview() {
           isSSR ? `createSSRApp` : `createApp`
         } as _createApp } from "vue"
         ${previewOptions?.customCode?.importCode || ''}
+        import * as Antd from 'ant-design-vue'
         const _mount = () => {
           const AppComponent = __modules__["${mainFile}"].default
           AppComponent.name = 'Repl'
@@ -261,6 +262,7 @@ async function updatePreview() {
           }
           app.config.errorHandler = e => console.error(e)
           ${previewOptions?.customCode?.useCode || ''}
+          app.use(Antd)
           app.mount('#app')
         }
         if (window.__ssr_promise__) {

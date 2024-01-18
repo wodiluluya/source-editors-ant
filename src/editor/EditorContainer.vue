@@ -50,6 +50,7 @@ watch(showMessage, () => {
 <style scoped>
 .editor-container {
   height: 100%;
+  width: 100%;
   overflow: hidden;
   position: relative;
 }

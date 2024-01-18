@@ -15,7 +15,6 @@ import { initMonaco } from './env'
 import { getOrCreateModel } from './utils'
 import { Store } from '../store'
 import type { PreviewMode } from '../editor/types'
-
 const props = withDefaults(
   defineProps<{
     filename: string
@@ -40,7 +39,7 @@ const store = inject<Store>('store')!
 initMonaco(store)
 
 const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
-
+const isFullScreen = ref(false)
 const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
 onMounted(async () => {
   const theme = await import('./highlight').then(r => r.registerHighlighter())
@@ -55,7 +54,7 @@ onMounted(async () => {
     ...(props.readonly
       ? { value: props.value, language: lang.value }
       : { model: null }),
-    fontSize: 13,
+    fontSize: 16,
     tabSize: 2,
     theme: replTheme.value === 'light' ? theme.light : theme.dark,
     readOnly: props.readonly,
@@ -67,6 +66,7 @@ onMounted(async () => {
     inlineSuggest: {
       enabled: false,
     },
+    'semanticHighlighting.enabled': true,
     fixedOverflowWidgets: true,
   })
   editor.value = editorInstance
@@ -154,10 +154,62 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   editor.value?.dispose()
 })
+// const handleExitFullEdit = () => {
+//     isFullScreen.value=false
+// };
+
+// const handleFullEdit = () => {
+//     isFullScreen.value=true
+// };
+
+const test = ()=>{
+  includeTemplate()
+}
+const includeTemplate = ()=> {
+    const template = `
+  <template>  <a-input
+        v-model:value="999999999999"
+
+      /></template>
+    `;
+
+    const jsCode = `
+
+    `;
+
+    const cssCode = `
+
+    `;
+debugger
+    // 获取编辑器的模型
+    const model = editor.value?.getModel();
+const range = model.findMatches('匹配的字符串或者正则表达式')[0].range;
+    // 在编辑器中插入模板代码
+    model?.applyEdits([
+      {
+        range: new monaco.Range(0, 0, Infinity),
+        text: template,
+      },
+      {
+        range: model.getFullModelRange(),
+        text: jsCode,
+      },
+      {
+        range: model.getFullModelRange(),
+        text: cssCode,
+      },
+    ]);
+  }
 </script>
 
 <template>
-  <div class="editor" ref="containerRef"></div>
+  <!-- <FullscreenOutlined
+    class="po"
+    @click="handleExitFullEdit"
+    v-if="isFullScreen"
+  />
+  <FullscreenExitOutlined class="po" v-else @click="handleFullEdit" /> -->
+  <div class="editor" :data-fullScreen="isFullScreen" ref="containerRef"></div>
 </template>
 
 <style>
@@ -166,5 +218,21 @@ onBeforeUnmount(() => {
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+[data-fullscreen="true"] {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  width: 100vw !important;
+  z-index: 999 !important;
+}
+.po {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  color: #333;
+  font-size: 20px;
+  z-index: 999999;
 }
 </style>
