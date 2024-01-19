@@ -7,7 +7,7 @@
     "useDefineForClassFields": false,
     "module": "esnext",
     "moduleResolution": "node",
-    "allowJs": false,
+    "allowJs": true,
     "strict": true,
     "noUnusedLocals": true,
     "experimentalDecorators": true,
@@ -17,7 +17,7 @@
     "lib": ["esnext", "dom"],
     "jsx": "preserve",
     "rootDir": ".",
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
-  "include": ["src", "test", "vite.config.ts"]
+  "include": ["src", "test", "vite.config.ts"],
 }

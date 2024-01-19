@@ -1,6 +1,6 @@
 {
   "name": "source-editors",
-  "version": "1.1.1",
+  "version": "1.1.6",
   "description": "Vue component for editing Vue components",
   "packageManager": "pnpm@8.14.0",
   "type": "module",
@@ -76,6 +76,7 @@
     "@volar/monaco": "~1.11.1",
     "@volar/typescript": "~1.11.1",
     "@vue/language-service": "1.9.0-alpha.3",
+    "@vue/compiler-sfc": "^3.2.45",
     "@vue/runtime-dom": "3.4.5",
     "@vue/server-renderer": "^3.4.5",
     "ant-design-vue": "^4.1.0",
@@ -100,5 +101,6 @@
     "vue-tsc": "1.9.0-alpha.3"
   },
   "dependencies": {
+    "vue3-sfc-loader": "^0.9.0"
   }
 }

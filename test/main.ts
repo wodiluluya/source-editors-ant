@@ -1,7 +1,8 @@
-import { createApp, h, watchEffect } from 'vue'
+import { createApp, h, watchEffect, ref } from 'vue'
 import { Repl, ReplStore } from '../src'
 import MonacoEditor from '../src/editor/MonacoEditor.vue'
-// import CodeMirrorEditor from '../src/editor/CodeMirrorEditor.vue'
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/reset.css'
 ;(window as any).process = { env: {} }
 
 const App = {
@@ -11,15 +12,14 @@ const App = {
       serializedState: location.hash.slice(1),
       showOutput: query.has('so'),
       outputMode: query.get('om') || 'preview',
-      defaultVueRuntimeURL: import.meta.env.PROD
-        ? undefined
-        : `${location.origin}/src/vue-dev-proxy`,
-      defaultVueServerRendererURL: import.meta.env.PROD
-        ? undefined
-        : `${location.origin}/src/vue-server-renderer-dev-proxy`,
+      //defaultVueRuntimeURL: undefined,
+      // import.meta.env.PROD
+      //   ? undefined
+      //   : `${location.origin}/src/vue-dev-proxy`,
+      // defaultVueServerRendererURL: import.meta.env.PROD
+      //   ? undefined
+      //   : `${location.origin}/src/vue-server-renderer-dev-proxy`,
     }))
-
-    console.log(store)
 
     watchEffect(() => history.replaceState({}, '', store.serialize()))
 
@@ -42,6 +42,7 @@ const App = {
       h(Repl, {
         store,
         theme: 'light',
+        ref: 'repldoc',
         editor: MonacoEditor,
         // layout: 'vertical',
         ssr: true,
@@ -56,4 +57,4 @@ const App = {
   },
 }
 
-createApp(App).mount('#app')
+createApp(App).use(Antd).mount('#app')

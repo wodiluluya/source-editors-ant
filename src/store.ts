@@ -141,9 +141,9 @@ export class ReplStore implements Store {
 
   constructor({
     serializedState = '',
-    defaultVueRuntimeURL = `/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-browser.js`,
-    defaultVueRuntimeProdURL = `/node_modules/@vue/runtime-dom/dist/runtime-dom.esm-browser.prod.js`,
-    defaultVueServerRendererURL = `https://cdn.jsdelivr.net/npm/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js`,
+    defaultVueRuntimeURL = ``,
+    defaultVueRuntimeProdURL = ``,
+    defaultVueServerRendererURL = ``,
     showOutput = false,
     outputMode = 'preview',
     productionMode = false,
@@ -379,16 +379,7 @@ export class ReplStore implements Store {
         importMapFile,
         JSON.stringify(
           {
-            imports: {
-              vue: this.defaultVueRuntimeURL,
-              //vue:'https://cdn.jsdelivr.net/npm/@vue/runtime-dom@3.4.5/dist/runtime-dom.esm-browser.js',
-              "vue/server-renderer": "/node_modules/@vue/server-renderer/dist/server-renderer.esm-browser.js",
-              "ant-design-vue": "/node_modules/ant-design-vue/dist/antd.esm.js",
-              "@ant-design/icons-vue": "/node_modules/@ant-design/icons-vue/es/index.js",
-              "dayjs": "/node_modules/dayjs/esm/index.js",
-              "ant-design-vue/es/locale/zh_CN": "/node_modules/ant-design-vue/es/locale/zh_CN.js",
-              "dayjs/locale/zh-cn": "/node_modules/dayjs/esm/locale/zh-cn.js",
-            },
+            imports: {},
           },
           null,
           2
@@ -410,7 +401,7 @@ export class ReplStore implements Store {
           )
         }
         map.code = JSON.stringify(json, null, 2)
-      } catch { }
+      } catch {}
     }
   }
 
@@ -441,8 +432,9 @@ export class ReplStore implements Store {
     this.vueVersion = version
     const compilerUrl = `https://cdn.jsdelivr.net/npm/@vue/compiler-sfc@${version}/dist/compiler-sfc.esm-browser.js`
     // differentiate prod/dev for runtime
-    const runtimeUrl = `https://cdn.jsdelivr.net/npm/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser${this.productionMode ? `.prod` : ``
-      }.js`
+    const runtimeUrl = `https://cdn.jsdelivr.net/npm/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser${
+      this.productionMode ? `.prod` : ``
+    }.js`
     const ssrUrl = `https://cdn.jsdelivr.net/npm/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js`
     this.pendingCompiler = import(/* @vite-ignore */ compilerUrl)
     this.compiler = await this.pendingCompiler

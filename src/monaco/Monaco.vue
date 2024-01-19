@@ -42,7 +42,7 @@ const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
 const isFullScreen = ref(false)
 const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
 onMounted(async () => {
-  const theme = await import('./highlight').then(r => r.registerHighlighter())
+  const theme = await import('./highlight').then((r) => r.registerHighlighter())
   ready.value = true
   await nextTick()
 
@@ -162,44 +162,47 @@ onBeforeUnmount(() => {
 //     isFullScreen.value=true
 // };
 
-const test = ()=>{
+const test = () => {
   includeTemplate()
 }
-const includeTemplate = ()=> {
-    const template = `
+const includeTemplate = () => {
+  const template = `
   <template>  <a-input
         v-model:value="999999999999"
 
       /></template>
-    `;
+    `
 
-    const jsCode = `
+  const jsCode = `
 
-    `;
+    `
 
-    const cssCode = `
+  const cssCode = `
 
-    `;
-debugger
-    // 获取编辑器的模型
-    const model = editor.value?.getModel();
-const range = model.findMatches('匹配的字符串或者正则表达式')[0].range;
-    // 在编辑器中插入模板代码
-    model?.applyEdits([
-      {
-        range: new monaco.Range(0, 0, Infinity),
-        text: template,
-      },
-      {
-        range: model.getFullModelRange(),
-        text: jsCode,
-      },
-      {
-        range: model.getFullModelRange(),
-        text: cssCode,
-      },
-    ]);
-  }
+    `
+  debugger
+  // 获取编辑器的模型
+  const model = editor.value?.getModel()
+  const range = model.findMatches('匹配的字符串或者正则表达式')[0].range
+  // 在编辑器中插入模板代码
+  model?.applyEdits([
+    {
+      range: new monaco.Range(0, 0, Infinity),
+      text: template,
+    },
+    {
+      range: model.getFullModelRange(),
+      text: jsCode,
+    },
+    {
+      range: model.getFullModelRange(),
+      text: cssCode,
+    },
+  ])
+}
+defineExpose({
+  editor,
+})
 </script>
 
 <template>
@@ -219,7 +222,7 @@ const range = model.findMatches('匹配的字符串或者正则表达式')[0].ra
   width: 100%;
   overflow: hidden;
 }
-[data-fullscreen="true"] {
+[data-fullscreen='true'] {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
