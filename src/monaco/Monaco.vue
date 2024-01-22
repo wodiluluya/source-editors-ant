@@ -56,6 +56,7 @@ onMounted(async () => {
       : { model: null }),
     fontSize: 16,
     tabSize: 2,
+    // contextmenu:false,
     theme: replTheme.value === 'light' ? theme.light : theme.dark,
     readOnly: props.readonly,
     automaticLayout: true,
@@ -66,10 +67,32 @@ onMounted(async () => {
     inlineSuggest: {
       enabled: false,
     },
-    'semanticHighlighting.enabled': true,
+    //   'semanticHighlighting.enabled': false,
     fixedOverflowWidgets: true,
   })
   editor.value = editorInstance
+
+  editor.value.addAction({
+    // id
+    id: 'formatVueCode',
+    // 该菜单键显示文本
+    label: '格式化代码',
+    // 控制该菜单键显示
+    precondition: 'shouldShowSqlRunnerAction',
+    // 该菜单键位置
+    contextMenuGroupId: 'navigation',
+    contextMenuOrder: 1.5,
+    // 点击该菜单键后运行
+    run: (editor) => {
+      console.log(editor)
+
+      debugger
+      // "editor.action.formatDocument"
+      //onContextMenu
+      editor.getAction('editor.action.formatDocument').run()
+    },
+  })
+  editor.value.createContextKey('shouldShowSqlRunnerAction', true)
 
   // Support for semantic highlighting
   const t = (editorInstance as any)._themeService._theme
@@ -154,6 +177,7 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   editor.value?.dispose()
 })
+
 // const handleExitFullEdit = () => {
 //     isFullScreen.value=false
 // };

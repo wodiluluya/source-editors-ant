@@ -18,7 +18,7 @@ import { Repl } from 'source-editors'
 import Monaco from 'source-editors/monaco-editor'
 // const store = = new ReplStore({})
 // store可获取实例信息
-// repl.value.getEditor() 获取编辑器
+// repl.value.getEditor() 获取编辑器  getData
 // repl.value.state
 </script>
 

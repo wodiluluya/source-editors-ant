@@ -422,57 +422,6 @@ export class ReplStore implements Store {
   }) {
     this.state.files[importMapFile]!.code = JSON.stringify(map, null, 2)
   }
-
-  setTypeScriptVersion(version: string) {
-    this.state.typescriptVersion = version
-    console.info(`[@vue/repl] Now using TypeScript version: ${version}`)
-  }
-
-  async setVueVersion(version: string) {
-    this.vueVersion = version
-    const compilerUrl = `https://cdn.jsdelivr.net/npm/@vue/compiler-sfc@${version}/dist/compiler-sfc.esm-browser.js`
-    // differentiate prod/dev for runtime
-    const runtimeUrl = `https://cdn.jsdelivr.net/npm/@vue/runtime-dom@${version}/dist/runtime-dom.esm-browser${
-      this.productionMode ? `.prod` : ``
-    }.js`
-    const ssrUrl = `https://cdn.jsdelivr.net/npm/@vue/server-renderer@${version}/dist/server-renderer.esm-browser.js`
-    this.pendingCompiler = import(/* @vite-ignore */ compilerUrl)
-    this.compiler = await this.pendingCompiler
-    this.pendingCompiler = null
-    this.state.vueRuntimeURL = runtimeUrl
-    this.state.vueServerRendererURL = ssrUrl
-    const importMap = this.getImportMap()
-    const imports = importMap.imports || (importMap.imports = {})
-    imports.vue = runtimeUrl
-    imports['vue/server-renderer'] = ssrUrl
-    this.setImportMap(importMap)
-    this.forceSandboxReset()
-    this.reloadLanguageTools?.()
-    console.info(`[@vue/repl] Now using Vue version: ${version}`)
-  }
-
-  resetVueVersion() {
-    this.vueVersion = undefined
-    this.compiler = defaultCompiler
-    this.state.vueRuntimeURL = this.defaultVueRuntimeURL
-    this.state.vueServerRendererURL = this.defaultVueServerRendererURL
-    const importMap = this.getImportMap()
-    const imports = importMap.imports || (importMap.imports = {})
-    imports.vue = this.defaultVueRuntimeURL
-    imports['vue/server-renderer'] = this.defaultVueServerRendererURL
-    this.setImportMap(importMap)
-    this.forceSandboxReset()
-    console.info(`[@vue/repl] Now using default Vue version`)
-  }
-
-  toggleProduction() {
-    this.productionMode = !this.productionMode
-    if (this.vueVersion) {
-      this.setVueVersion(this.vueVersion)
-    } else {
-      this.resetVueVersion()
-    }
-  }
 }
 
 function setFile(

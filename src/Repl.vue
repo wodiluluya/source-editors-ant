@@ -89,14 +89,14 @@ provide('theme', toRef(props, 'theme'))
 /**
  * Reload the preview iframe
  */
-function reload() {
-  outputRef.value?.reload()
+function getData() {
+  return outputRef.value?.getData()
 }
 
 function getEditor() {
   return edopt.value?.getEditors()
 }
-defineExpose({ getEditor })
+defineExpose({ getEditor, getData })
 </script>
 
 <template>

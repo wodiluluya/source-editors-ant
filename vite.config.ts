@@ -32,7 +32,7 @@ const patchCssFiles: Plugin = {
     )
 
     // 2. inject css imports to the files
-    ;['vue-repl', 'monaco-editor', 'codemirror-editor'].forEach((file) => {
+    ;['vue-repl', 'monaco-editor'].forEach((file) => {
       const filePath = path.resolve(outDir, file + '.js')
       const content = fs.readFileSync(filePath, 'utf-8')
       fs.writeFileSync(filePath, `import './${file}.css'\n${content}`)
@@ -64,7 +64,6 @@ export default mergeConfig(base, {
       entry: {
         'vue-repl': './src/index.ts',
         'monaco-editor': './src/editor/MonacoEditor.vue',
-        'codemirror-editor': './src/editor/CodeMirrorEditor.vue',
       },
       formats: ['es'],
       fileName: () => '[name].js',

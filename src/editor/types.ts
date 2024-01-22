@@ -1,7 +1,6 @@
-import CodeMirrorEditor from "./CodeMirrorEditor.vue";
-import MonacoEditor from "./MonacoEditor.vue";
+import MonacoEditor from './MonacoEditor.vue'
 
-export type EditorComponentType = typeof CodeMirrorEditor | typeof MonacoEditor
+export type EditorComponentType = typeof MonacoEditor
 
 export type PreviewMode = 'js' | 'css' | 'ssr'
 

@@ -1,22 +1,28 @@
 <script setup lang="ts">
-import { inject } from 'vue'
+import { inject, watch, ref } from 'vue'
 import Render from './Render.vue'
 import { Store } from '../store'
 
 const store = inject('store') as Store
-
-const loadFinish = () => {}
-
-function reload() {}
-
-defineExpose({ reload })
+const random = ref()
+const asynccode = ref()
+const updateRender = () => {
+  random.value = new Date().getTime()
+}
+const getData = () => {
+  return asynccode.value?.getData()
+}
+watch(() => store.state.activeFile.code, updateRender)
+defineExpose({
+  getData,
+})
 </script>
 
 <template>
   <div class="iframe-container">
     <Render
       ref="asynccode"
-      @loadFinish="loadFinish"
+      :key="random"
       :code="store.state.activeFile.code"
     ></Render>
   </div>

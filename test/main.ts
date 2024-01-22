@@ -1,4 +1,4 @@
-import { createApp, h, watchEffect, ref } from 'vue'
+import { createApp, h } from 'vue'
 import { Repl, ReplStore } from '../src'
 import MonacoEditor from '../src/editor/MonacoEditor.vue'
 import Antd from 'ant-design-vue'
@@ -7,52 +7,12 @@ import 'ant-design-vue/dist/reset.css'
 
 const App = {
   setup() {
-    const query = new URLSearchParams(location.search)
-    const store = ((window as any).store = new ReplStore({
-      serializedState: location.hash.slice(1),
-      showOutput: query.has('so'),
-      outputMode: query.get('om') || 'preview',
-      //defaultVueRuntimeURL: undefined,
-      // import.meta.env.PROD
-      //   ? undefined
-      //   : `${location.origin}/src/vue-dev-proxy`,
-      // defaultVueServerRendererURL: import.meta.env.PROD
-      //   ? undefined
-      //   : `${location.origin}/src/vue-server-renderer-dev-proxy`,
-    }))
-
-    watchEffect(() => history.replaceState({}, '', store.serialize()))
-
-    // setTimeout(() => {
-    // store.setFiles(
-    //   {
-    //     'index.html': '<h1>yo</h1>',
-    //     'main.js': 'document.body.innerHTML = "<h1>hello</h1>"',
-    //     'foo.js': 'document.body.innerHTML = "<h1>hello</h1>"',
-    //     'bar.js': 'document.body.innerHTML = "<h1>hello</h1>"',
-    //     'baz.js': 'document.body.innerHTML = "<h1>hello</h1>"'
-    //   },
-    //   'index.html'
-    // )
-    // }, 1000);
-
-    // store.setVueVersion('3.2.8')
+    const store = ((window as any).store = new ReplStore({}))
 
     return () =>
       h(Repl, {
         store,
-        theme: 'light',
-        ref: 'repldoc',
         editor: MonacoEditor,
-        // layout: 'vertical',
-        ssr: true,
-        sfcOptions: {
-          script: {
-            // inlineTemplate: false
-          },
-        },
-        // showCompileOutput: false,
-        // showImportMap: false
       })
   },
 }
