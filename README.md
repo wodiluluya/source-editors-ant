@@ -1,3 +1,5 @@
+## 源码编辑器
+
 ### 支持ant-design-vue v4 less 全局汉化 内网环境等 必须全局引入ant-design-vue
 
 - main文件中
@@ -14,9 +16,13 @@ app.use(Antd)
 <script setup>
 import { Repl } from 'source-editors'
 import Monaco from 'source-editors/monaco-editor'
+// const store = = new ReplStore({})
+// store可获取实例信息
+// repl.value.getEditor() 获取编辑器
+// repl.value.state
 </script>
 
 <template>
-  <Repl :editor="Monaco" ref="repl" />
+  <Repl :editor="Monaco" :store="store" ref="repl" />
 </template>
 ```

@@ -13,6 +13,7 @@ const props = defineProps<{
   editorComponent: EditorComponentType
 }>()
 
+const editors = ref()
 const store = inject('store') as Store
 const showMessage = ref(getItem())
 
@@ -29,8 +30,16 @@ function getItem() {
   return !(item === 'false')
 }
 
+function getEditors() {
+  return editors.value.getEditor()
+}
+
 watch(showMessage, () => {
   setItem()
+})
+
+defineExpose({
+  getEditors,
 })
 </script>
 
@@ -39,6 +48,7 @@ watch(showMessage, () => {
   <div class="editor-container">
     <props.editorComponent
       @change="onChange"
+      ref="editors"
       :value="store.state.activeFile.code"
       :filename="store.state.activeFile.filename"
     />

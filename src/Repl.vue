@@ -94,9 +94,9 @@ function reload() {
 }
 
 function getEditor() {
-  return edopt.value?.getEditor()
+  return edopt.value?.getEditors()
 }
-defineExpose({ reload, getEditor })
+defineExpose({ getEditor })
 </script>
 
 <template>
