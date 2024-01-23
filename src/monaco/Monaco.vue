@@ -67,32 +67,10 @@ onMounted(async () => {
     inlineSuggest: {
       enabled: false,
     },
-    //   'semanticHighlighting.enabled': false,
+    'semanticHighlighting.enabled': true,
     fixedOverflowWidgets: true,
   })
   editor.value = editorInstance
-
-  editor.value.addAction({
-    // id
-    id: 'formatVueCode',
-    // 该菜单键显示文本
-    label: '格式化代码',
-    // 控制该菜单键显示
-    precondition: 'shouldShowSqlRunnerAction',
-    // 该菜单键位置
-    contextMenuGroupId: 'navigation',
-    contextMenuOrder: 1.5,
-    // 点击该菜单键后运行
-    run: (editor) => {
-      console.log(editor)
-
-      debugger
-      // "editor.action.formatDocument"
-      //onContextMenu
-      editor.getAction('editor.action.formatDocument').run()
-    },
-  })
-  editor.value.createContextKey('shouldShowSqlRunnerAction', true)
 
   // Support for semantic highlighting
   const t = (editorInstance as any)._themeService._theme
@@ -178,52 +156,6 @@ onBeforeUnmount(() => {
   editor.value?.dispose()
 })
 
-// const handleExitFullEdit = () => {
-//     isFullScreen.value=false
-// };
-
-// const handleFullEdit = () => {
-//     isFullScreen.value=true
-// };
-
-const test = () => {
-  includeTemplate()
-}
-const includeTemplate = () => {
-  const template = `
-  <template>  <a-input
-        v-model:value="999999999999"
-
-      /></template>
-    `
-
-  const jsCode = `
-
-    `
-
-  const cssCode = `
-
-    `
-  debugger
-  // 获取编辑器的模型
-  const model = editor.value?.getModel()
-  const range = model.findMatches('匹配的字符串或者正则表达式')[0].range
-  // 在编辑器中插入模板代码
-  model?.applyEdits([
-    {
-      range: new monaco.Range(0, 0, Infinity),
-      text: template,
-    },
-    {
-      range: model.getFullModelRange(),
-      text: jsCode,
-    },
-    {
-      range: model.getFullModelRange(),
-      text: cssCode,
-    },
-  ])
-}
 defineExpose({
   editor,
 })

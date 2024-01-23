@@ -16,6 +16,8 @@ import * as Antd from 'ant-design-vue'
 import * as Less from 'less'
 import { loadModule } from 'vue3-sfc-loader'
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
+import * as icons from '@ant-design/icons-vue'
+import * as type from 'ant-design-vue/es/form'
 import dayjs from 'dayjs'
 import dayLocale from 'dayjs/locale/zh-cn'
 const asyncCom = ref()
@@ -35,6 +37,8 @@ const init = () => {
         'ant-design-vue': Antd,
         'ant-design-vue/es/locale/zh_CN': zhCN,
         'dayjs/locale/zh-cn': dayLocale,
+        'ant-design-vue/es/form': type,
+        '@ant-design/icons-vue': icons,
         less: Less,
       },
       async getFile() {

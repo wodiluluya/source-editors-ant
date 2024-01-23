@@ -4,6 +4,7 @@ import Render from './Render.vue'
 import { Store } from '../store'
 
 const store = inject('store') as Store
+
 const random = ref()
 const asynccode = ref()
 const updateRender = () => {
@@ -12,9 +13,21 @@ const updateRender = () => {
 const getData = () => {
   return asynccode.value?.getData()
 }
+const setData = () => {
+  return asynccode.value?.setData()
+}
+
+const validate = () => {
+  return asynccode.value?.validate()
+}
+const finish = () => {
+  // return asynccode.value?.getData()
+}
 watch(() => store.state.activeFile.code, updateRender)
 defineExpose({
   getData,
+  setData,
+  validate,
 })
 </script>
 
@@ -23,6 +36,7 @@ defineExpose({
     <Render
       ref="asynccode"
       :key="random"
+      @loadFinish="finish"
       :code="store.state.activeFile.code"
     ></Render>
   </div>

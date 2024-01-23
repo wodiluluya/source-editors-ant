@@ -14,7 +14,7 @@ app.use(Antd)
 
 ```vue
 <script setup>
-import { Repl } from 'source-editors'
+import { Repl, ReplStore } from 'source-editors'
 import Monaco from 'source-editors/monaco-editor'
 // const store = = new ReplStore({})
 // store可获取实例信息

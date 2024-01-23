@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import FileSelector from './FileSelector.vue'
 import Message from '../Message.vue'
 import { debounce } from '../utils'
 import { inject, ref, watch } from 'vue'
@@ -44,7 +43,6 @@ defineExpose({
 </script>
 
 <template>
-  <FileSelector />
   <div class="editor-container">
     <props.editorComponent
       @change="onChange"

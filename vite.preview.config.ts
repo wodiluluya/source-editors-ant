@@ -1,9 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import replace from '@rollup/plugin-replace'
+import nodeProfill from 'vite-plugin-node-stdlib-browser'
 import path from 'path'
 export default defineConfig({
+  define: {
+    'process.env': {},
+  },
   plugins: [
+    nodeProfill(),
     vue({
       script: {
         defineModel: true,

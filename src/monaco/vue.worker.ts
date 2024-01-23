@@ -1,6 +1,7 @@
 // @ts-ignore
 import * as worker from 'monaco-editor-core/esm/vs/editor/editor.worker'
 import type * as monaco from 'monaco-editor-core'
+import * as tsp from 'typescript'
 import {
   createJsDelivrFs,
   createJsDelivrUriResolver,
@@ -32,14 +33,15 @@ self.onmessage = async (msg: MessageEvent<WorkerMessage>) => {
     if (msg.data.tsLocale) {
       locale = msg.data.tsLocale
     }
-
-    ;[ts, tsLocalized] = await Promise.all([
-      importTsFromCdn(msg.data.tsVersion),
-      locale &&
-        fetchJson(
-          `https://cdn.jsdelivr.net/npm/typescript@${msg.data.tsVersion}/lib/${locale}/diagnosticMessages.generated.json`
-        ),
-    ])
+    ts = tsp
+    tsLocalized = undefined
+    // ;[ts, tsLocalized] = await Promise.all([
+    //   importTsFromCdn(msg.data.tsVersion),
+    //   locale &&
+    //     fetchJson(
+    //       `https://cdn.jsdelivr.net/npm/typescript@${msg.data.tsVersion}/lib/${locale}/diagnosticMessages.generated.json`
+    //     ),
+    // ])
     self.postMessage('inited')
     return
   }

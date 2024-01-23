@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SplitPane from './SplitPane.vue'
 import Output from './output/Output.vue'
-import { Store, ReplStore, SFCOptions } from './store'
+import { Store, ReplStore } from './store'
 import { provide, ref, toRef, computed } from 'vue'
 import type { EditorComponentType } from './editor/types'
 import EditorContainer from './editor/EditorContainer.vue'
@@ -10,45 +10,12 @@ export interface Props {
   theme?: 'dark' | 'light'
   editor: EditorComponentType
   store?: Store
-  autoResize?: boolean
-  showCompileOutput?: boolean
-  showImportMap?: boolean
-  showTsConfig?: boolean
-  clearConsole?: boolean
-  sfcOptions?: SFCOptions
-  layout?: 'horizontal' | 'vertical'
-  layoutReverse?: boolean
-  ssr?: boolean
-  previewOptions?: {
-    headHTML?: string
-    bodyHTML?: string
-    placeholderHTML?: string
-    customCode?: {
-      importCode?: string
-      useCode?: string
-    }
-  }
+  layout?: 'horizontal'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  theme: 'light',
   store: () => new ReplStore(),
-  autoResize: true,
-  showCompileOutput: true,
-  showImportMap: true,
-  showTsConfig: true,
-  clearConsole: true,
-  layoutReverse: false,
-  ssr: false,
-  previewOptions: () => ({
-    headHTML: '',
-    bodyHTML: '',
-    placeholderHTML: '',
-    customCode: {
-      importCode: '',
-      useCode: '',
-    },
-  }),
+  theme: 'light',
 })
 
 if (!props.editor) {
@@ -58,33 +25,13 @@ if (!props.editor) {
 const outputRef = ref<InstanceType<typeof Output>>()
 const edopt = ref()
 const { store } = props
-const sfcOptions = (store.options = props.sfcOptions || {})
-if (!sfcOptions.script) {
-  sfcOptions.script = {}
-}
-// @ts-ignore only needed in 3.3
-sfcOptions.script.fs = {
-  fileExists(file: string) {
-    if (file.startsWith('/')) file = file.slice(1)
-    return !!store.state.files[file]
-  },
-  readFile(file: string) {
-    if (file.startsWith('/')) file = file.slice(1)
-    return store.state.files[file].code
-  },
-}
 
 store.init()
 
-const editorSlotName = computed(() => (props.layoutReverse ? 'right' : 'left'))
-const outputSlotName = computed(() => (props.layoutReverse ? 'left' : 'right'))
+const editorSlotName = computed(() => 'left')
+const outputSlotName = computed(() => 'right')
 
 provide('store', store)
-provide('autoresize', props.autoResize)
-provide('import-map', toRef(props, 'showImportMap'))
-provide('tsconfig', toRef(props, 'showTsConfig'))
-provide('clear-console', toRef(props, 'clearConsole'))
-provide('preview-options', props.previewOptions)
 provide('theme', toRef(props, 'theme'))
 /**
  * Reload the preview iframe
@@ -106,12 +53,7 @@ defineExpose({ getEditor, getData })
         <EditorContainer ref="edopt" :editorComponent="editor" />
       </template>
       <template #[outputSlotName]>
-        <Output
-          ref="outputRef"
-          :editorComponent="editor"
-          :showCompileOutput="props.showCompileOutput"
-          :ssr="!!props.ssr"
-        />
+        <Output ref="outputRef" :editorComponent="editor" />
       </template>
     </SplitPane>
   </div>

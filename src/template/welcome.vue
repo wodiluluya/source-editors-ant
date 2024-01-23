@@ -1,4 +1,5 @@
 <template>
+  <div class="test">66666</div>
   <a-config-provider :locale="locale">
     <a-form ref="vForm" :model="formData">
       <a-form-item
@@ -246,4 +247,17 @@ const submitForm = () => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+@bc: #f00;
+.test {
+  color: red;
+  font-size: 20px;
+  &::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: @bc;
+  }
+}
+</style>
