@@ -136,9 +136,9 @@ onMounted(async () => {
     )
   }
 
-  editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
-    // ignore save event
-  })
+  // editorInstance.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, () => {
+  //   // ignore save event
+  // })
 
   editorInstance.onDidChangeModelContent(() => {
     emit('change', editorInstance.getValue())

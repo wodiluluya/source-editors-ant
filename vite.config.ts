@@ -3,7 +3,7 @@ import dts from 'vite-plugin-dts'
 import base from './vite.preview.config'
 import fs from 'node:fs'
 import path from 'node:path'
-
+import nodeProfill from 'vite-plugin-node-stdlib-browser'
 const genStub: Plugin = {
   name: 'gen-stub',
   apply: 'build',
@@ -41,7 +41,11 @@ const patchCssFiles: Plugin = {
 }
 
 export default mergeConfig(base, {
+  define: {
+    'process.env': {},
+  },
   plugins: [
+    nodeProfill(),
     dts({
       rollupTypes: false,
     }),
