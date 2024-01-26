@@ -69,15 +69,13 @@ defineExpose({ getEditor, getData })
   --color-branding: #42b883;
   --color-branding-dark: #416f9c;
   --header-height: 38px;
-
+  text-align: left;
   height: 100%;
   margin: 0;
   overflow: hidden;
   font-size: 13px;
   background-color: var(--bg-soft);
-  box-shadow:
-    0 1px 2px 0 rgba(0, 0, 0, 0.1),
-    0 1px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 1px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px 0 rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   min-height: 450px;

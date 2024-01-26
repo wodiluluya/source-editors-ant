@@ -5,6 +5,7 @@ import { createApp, h } from 'vue'
 import { Repl, ReplStore } from '../dist/vue-repl'
 import MonacoEditor from '../dist/monaco-editor'
 
+import './test.css'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 ;(window as any).process = { env: {} }
