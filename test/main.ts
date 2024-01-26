@@ -1,6 +1,6 @@
 import { createApp, h } from 'vue'
 // import { Repl, ReplStore } from '../src'
-// import MonacoEditor from '../src/editor/MonacoEditor.vue'
+//  import MonacoEditor from '../src/editor/MonacoEditor.vue'
 
 import { Repl, ReplStore } from '../dist/vue-repl'
 import MonacoEditor from '../dist/monaco-editor'

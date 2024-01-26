@@ -15,6 +15,9 @@ import { initMonaco } from './env'
 import { getOrCreateModel } from './utils'
 import { Store } from '../store'
 import type { PreviewMode } from '../editor/types'
+import prettier from 'prettier/standalone'
+import parserHtml from 'prettier/parser-html'
+import parserBabel from 'prettier/parser-babel'
 const props = withDefaults(
   defineProps<{
     filename: string
@@ -41,6 +44,28 @@ initMonaco(store)
 const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
 const isFullScreen = ref(false)
 const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
+
+const formatProvider: any = {
+  provideDocumentFormattingEdits: (model: any) => {
+    const code = model.getValue()
+    const formattedCode = prettier.format(code, {
+      plugins: [parserHtml, parserBabel],
+      parser: 'html',
+      // 允许vue脚本
+      vueIndentScriptAndStyle: true,
+      singleQuote: true,
+      semi: true,
+      printWidth: 100,
+      tabWidth: 2,
+    })
+    return [
+      {
+        range: model.getFullModelRange(),
+        text: formattedCode,
+      },
+    ]
+  },
+}
 onMounted(async () => {
   const theme = await import('./highlight').then((r) => r.registerHighlighter())
   ready.value = true
@@ -50,6 +75,7 @@ onMounted(async () => {
     throw new Error('Cannot find containerRef')
   }
 
+  monaco.languages.registerDocumentFormattingEditProvider('vue', formatProvider)
   const editorInstance = monaco.editor.create(containerRef.value, {
     ...(props.readonly
       ? { value: props.value, language: lang.value }
@@ -67,7 +93,10 @@ onMounted(async () => {
     inlineSuggest: {
       enabled: false,
     },
-    'semanticHighlighting.enabled': true,
+    formatOnPaste: true,
+    formatOnType: true,
+    // formatOnSave: true,
+    // 'semanticHighlighting.enabled': true,
     fixedOverflowWidgets: true,
   })
   editor.value = editorInstance
