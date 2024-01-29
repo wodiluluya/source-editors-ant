@@ -13,15 +13,31 @@ const updateRender = () => {
 const getData = () => {
   return asynccode.value?.getData()
 }
-const setData = () => {
-  return asynccode.value?.setData()
+const setData = (obj: any) => {
+  return asynccode.value?.setData(obj)
 }
 
 const validate = () => {
   return asynccode.value?.validate()
 }
 const finish = () => {
-  // return asynccode.value?.getData()
+  if (asynccode.value) {
+    asynccode.value?.setData({
+      name: {
+        type: 'input',
+        field: 'name',
+        label: '姓名',
+        rules: [{ required: true, min: 3, max: 5 }],
+        componentProp: {
+          placeholder: '請輸入',
+          defaultValue: '我是变更后的',
+          disabled: true,
+          hidden: false,
+          option: undefined,
+        },
+      },
+    })
+  }
 }
 watch(() => store.state.activeFile.code, updateRender)
 defineExpose({

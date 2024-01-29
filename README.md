@@ -30,7 +30,7 @@ const store = = new CantStore({})
 - 组件中渲染表单
 
 ```vue
-import Preview from "source-editors";
+import {Preview} from "source-editors";
 <Preview ref="pdom" :code="code"></Preview>
 //console.log(pdom.value?.getData()); //pdom.value?.setData()
 //pdom.value?.validate()

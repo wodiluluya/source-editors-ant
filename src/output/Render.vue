@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineAsyncComponent, shallowRef, ref, nextTick } from 'vue'
+import { defineAsyncComponent, shallowRef, ref, inject, nextTick } from 'vue'
 import './report.js'
 import * as Vue from 'vue'
 import * as Antd from 'ant-design-vue'
@@ -20,6 +20,7 @@ import * as icons from '@ant-design/icons-vue'
 import * as type from 'ant-design-vue/es/form'
 import dayjs from 'dayjs'
 import dayLocale from 'dayjs/locale/zh-cn'
+
 const asyncCom = ref()
 const previewComp = shallowRef()
 const props = defineProps({
@@ -70,7 +71,7 @@ const finish = () => {
   })
 }
 const setData = (obj: any) => {
-  asyncCom.value.formData = obj
+  asyncCom.value.formData = Object.assign(asyncCom.value.formData, obj)
 }
 const getData = () => {
   return JSON.stringify(asyncCom.value.formData)

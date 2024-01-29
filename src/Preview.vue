@@ -11,16 +11,15 @@ const updateRender = () => {
 const getData = () => {
   return asynccode.value?.getData()
 }
-const setData = () => {
-  return asynccode.value?.setData()
+const setData = (obj: any) => {
+  return asynccode.value?.setData(obj)
 }
 
 const validate = () => {
   return asynccode.value?.validate()
 }
-const finish = () => {
-  // return asynccode.value?.getData()
-}
+
+const finish = () => {}
 watch(() => props.code, updateRender)
 defineExpose({
   getData,

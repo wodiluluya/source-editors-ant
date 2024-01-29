@@ -125,6 +125,7 @@ onMounted(async () => {
   watch(
     () => props.value,
     (value) => {
+      //  editorInstance.getAction('editor.action.formatDocument').run()
       if (editorInstance.getValue() === value) return
       editorInstance.setValue(value || '')
     },
@@ -169,10 +170,6 @@ onMounted(async () => {
   // })
 
   editorInstance.onDidChangeModelContent(() => {
-    monaco.languages.registerDocumentFormattingEditProvider(
-      'vue',
-      formatProvider
-    )
     emit('change', editorInstance.getValue())
   })
 

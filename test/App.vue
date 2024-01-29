@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Preview from '../dist/code-preview'
+import Preview from '../src/Preview.vue'
 const pdom = ref()
 const code = `<template>
     <div class="test">66666</div>
@@ -225,8 +225,22 @@ const code = `<template>
     `
 
 const optFunc = () => {
-  console.log(pdom.value?.getData())
-  //pdom.value?.setData()
+  // console.log(pdom.value?.getData())
+  pdom.value?.setData({
+    name: {
+      type: 'input',
+      field: 'name',
+      label: '姓名',
+      rules: [{ required: true, min: 3, max: 5 }],
+      componentProp: {
+        placeholder: '請輸入',
+        defaultValue: '值变化了',
+        disabled: false,
+        hidden: false,
+        option: undefined,
+      },
+    },
+  })
   //pdom.value?.validate()
 }
 </script>
