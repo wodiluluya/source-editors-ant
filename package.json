@@ -1,19 +1,19 @@
 {
   "name": "source-editors",
-  "version": "1.2.6",
-  "description": "ant-design-vue全家桶源码编辑器，支持内网、less、ts、antd图标、自定义格式化等",
+  "version": "1.2.7",
+  "description": "ant-design-vue全家桶源码表单编辑器，支持内网、less、ts、antd图标、自定义格式化等",
   "packageManager": "pnpm@8.14.0",
   "type": "module",
   "main": "dist/ssr-stub.js",
-  "module": "dist/vue-repl.js",
+  "module": "dist/code-opt.js",
   "files": [
     "dist"
   ],
-  "types": "dist/vue-repl.d.ts",
+  "types": "dist/code-opt.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/vue-repl.d.ts",
-      "import": "./dist/vue-repl.js",
+      "types": "./dist/code-opt.d.ts",
+      "import": "./dist/code-opt.js",
       "require": "./dist/ssr-stub.js"
     },
     "./monaco-editor": {
@@ -21,8 +21,8 @@
       "import": "./dist/monaco-editor.js",
       "require": null
     },
-    "./style.css": "./dist/vue-repl.css",
-    "./dist/style.css": "./dist/vue-repl.css"
+    "./style.css": "./dist/code-opt.css",
+    "./dist/style.css": "./dist/code-opt.css"
   },
   "typesVersions": {
     "*": {

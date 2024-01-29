@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import SplitPane from './SplitPane.vue'
 import Output from './output/Output.vue'
-import { Store, ReplStore } from './store'
+import { Store, CantStore } from './store'
 import { provide, ref, toRef, computed } from 'vue'
 import type { EditorComponentType } from './editor/types'
 import EditorContainer from './editor/EditorContainer.vue'
@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  store: () => new ReplStore(),
+  store: () => new CantStore(),
   theme: 'light',
 })
 
@@ -47,7 +47,7 @@ defineExpose({ getEditor, getData })
 </script>
 
 <template>
-  <div class="vue-repl">
+  <div class="code-opt">
     <SplitPane :layout="layout">
       <template #[editorSlotName]>
         <EditorContainer ref="edopt" :editorComponent="editor" />
@@ -60,7 +60,7 @@ defineExpose({ getEditor, getData })
 </template>
 
 <style>
-.vue-repl {
+.code-opt {
   --bg: #fff;
   --bg-soft: #f8f8f8;
   --border: #ddd;

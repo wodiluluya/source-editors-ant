@@ -29,22 +29,6 @@ const props = withDefaults(
     readonly: false,
   }
 )
-
-const emit = defineEmits<{
-  (e: 'change', value: string): void
-}>()
-
-const containerRef = ref<HTMLDivElement>()
-const ready = ref(false)
-const editor = shallowRef<monaco.editor.IStandaloneCodeEditor>()
-const store = inject<Store>('store')!
-
-initMonaco(store)
-
-const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
-const isFullScreen = ref(false)
-const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
-
 const formatProvider: any = {
   provideDocumentFormattingEdits: (model: any) => {
     const code = model.getValue()
@@ -66,15 +50,29 @@ const formatProvider: any = {
     ]
   },
 }
+const emit = defineEmits<{
+  (e: 'change', value: string): void
+}>()
+
+const containerRef = ref<HTMLDivElement>()
+const ready = ref(false)
+const editor = shallowRef<monaco.editor.IStandaloneCodeEditor>()
+const store = inject<Store>('store')!
+
+initMonaco(store)
+
+const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
+const isFullScreen = ref(false)
+const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
+
 onMounted(async () => {
   const theme = await import('./highlight').then((r) => r.registerHighlighter())
   ready.value = true
-  await nextTick()
+  await nextTick(() => {})
 
   if (!containerRef.value) {
     throw new Error('Cannot find containerRef')
   }
-
   monaco.languages.registerDocumentFormattingEditProvider('vue', formatProvider)
   const editorInstance = monaco.editor.create(containerRef.value, {
     ...(props.readonly
@@ -99,6 +97,7 @@ onMounted(async () => {
     // 'semanticHighlighting.enabled': true,
     fixedOverflowWidgets: true,
   })
+
   editor.value = editorInstance
 
   // Support for semantic highlighting
@@ -170,6 +169,10 @@ onMounted(async () => {
   // })
 
   editorInstance.onDidChangeModelContent(() => {
+    monaco.languages.registerDocumentFormattingEditProvider(
+      'vue',
+      formatProvider
+    )
     emit('change', editorInstance.getValue())
   })
 
@@ -206,21 +209,5 @@ defineExpose({
   height: 100%;
   width: 100%;
   overflow: hidden;
-}
-[data-fullscreen='true'] {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  height: 100vh !important;
-  width: 100vw !important;
-  z-index: 999 !important;
-}
-.po {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  color: #333;
-  font-size: 20px;
-  z-index: 999999;
 }
 </style>

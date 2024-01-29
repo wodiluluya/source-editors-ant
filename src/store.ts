@@ -121,7 +121,7 @@ export interface StoreOptions {
   newSFCTemplate?: string
 }
 
-export class ReplStore implements Store {
+export class CantStore implements Store {
   state: StoreState
   compiler = defaultCompiler
   vueVersion?: string

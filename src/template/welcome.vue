@@ -245,6 +245,10 @@ const formData = reactive({
 const submitForm = () => {
   return vForm.value.validate()
 }
+defineExpose({
+  submitForm,
+  formData,
+})
 </script>
 
 <style lang="less" scoped>

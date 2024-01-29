@@ -30,9 +30,12 @@ const patchCssFiles: Plugin = {
       path.resolve(outDir, 'MonacoEditor.css'),
       path.resolve(outDir, 'monaco-editor.css')
     )
-
+    fs.renameSync(
+      path.resolve(outDir, 'Preview.css'),
+      path.resolve(outDir, 'code-preview.css')
+    )
     // 2. inject css imports to the files
-    ;['vue-repl', 'monaco-editor'].forEach((file) => {
+    ;['code-opt', 'monaco-editor', 'code-preview'].forEach((file) => {
       const filePath = path.resolve(outDir, file + '.js')
       const content = fs.readFileSync(filePath, 'utf-8')
       fs.writeFileSync(filePath, `import './${file}.css'\n${content}`)
@@ -66,8 +69,9 @@ export default mergeConfig(base, {
     minify: false,
     lib: {
       entry: {
-        'vue-repl': './src/index.ts',
+        'code-opt': './src/index.ts',
         'monaco-editor': './src/editor/MonacoEditor.vue',
+        'code-preview': './src/Preview.vue',
       },
       formats: ['es'],
       fileName: () => '[name].js',
