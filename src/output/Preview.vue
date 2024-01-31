@@ -20,25 +20,7 @@ const setData = (obj: any) => {
 const validate = () => {
   return asynccode.value?.validate()
 }
-const finish = () => {
-  if (asynccode.value) {
-    asynccode.value?.setData({
-      name: {
-        type: 'input',
-        field: 'name',
-        label: '姓名',
-        rules: [{ required: true, min: 3, max: 5 }],
-        componentProp: {
-          placeholder: '請輸入',
-          defaultValue: '我是变更后的',
-          disabled: true,
-          hidden: false,
-          option: undefined,
-        },
-      },
-    })
-  }
-}
+const finish = () => {}
 watch(() => store.state.activeFile.code, updateRender)
 defineExpose({
   getData,

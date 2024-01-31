@@ -1,6 +1,6 @@
 {
   "name": "source-editors",
-  "version": "1.2.7",
+  "version": "1.2.9",
   "description": "ant-design-vue全家桶源码表单编辑器，支持内网、less、ts、antd图标、自定义格式化等",
   "packageManager": "pnpm@8.14.0",
   "type": "module",
