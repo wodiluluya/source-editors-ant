@@ -253,9 +253,11 @@ defineExpose({
 
 <style lang="less" scoped>
 @bc: #f00;
+
 .test {
   color: red;
   font-size: 20px;
+
   &::after {
     content: '';
     display: inline-block;

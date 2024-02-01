@@ -46,11 +46,18 @@ const init = () => {
         return props.code
       },
       addStyle(textContent: any) {
-        const style = Object.assign(document.createElement('style'), {
-          textContent,
-        })
-        const ref = document.head.getElementsByTagName('style')[0] || null
-        document.head.insertBefore(style, ref)
+        let myStyle = document.getElementById('firstStyle')
+        if (myStyle) {
+          myStyle.textContent = textContent
+        } else {
+          const style = Object.assign(document.createElement('style'), {
+            textContent,
+          })
+          style.id = 'firstStyle'
+          const ref = document.head.getElementsByTagName('style')[0] || null
+
+          document.head.insertBefore(style, ref)
+        }
       },
     }
     const { loadModule } = window['vue3-sfc-loader']

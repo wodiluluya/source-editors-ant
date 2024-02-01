@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import Preview from '../src/Preview.vue'
+import Preview from '../dist/code-preview'
 const pdom = ref()
 const code = `<template>
     <div class="test">66666</div>

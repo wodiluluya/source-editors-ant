@@ -16,8 +16,11 @@ import { getOrCreateModel } from './utils'
 import { Store } from '../store'
 import type { PreviewMode } from '../editor/types'
 import prettier from 'prettier/standalone'
-import parserHtml from 'prettier/parser-html'
-import parserBabel from 'prettier/parser-babel'
+// import parserHtml from 'prettier/parser-html'
+// import parserBabel from 'prettier/parser-babel'
+// import parserEspree from 'prettier/parser-espree'
+// import parserTypescript from 'prettier/parser-typescript'
+import prettierVue from 'prettier-plugin-vue'
 const props = withDefaults(
   defineProps<{
     filename: string
@@ -31,16 +34,17 @@ const props = withDefaults(
 )
 const formatProvider: any = {
   provideDocumentFormattingEdits: (model: any) => {
+    debugger
     const code = model.getValue()
     const formattedCode = prettier.format(code, {
-      plugins: [parserHtml, parserBabel],
-      parser: 'html',
+      plugins: [prettierVue],
+      parser: 'vue',
       // 允许vue脚本
-      vueIndentScriptAndStyle: true,
-      singleQuote: true,
-      semi: true,
-      printWidth: 100,
-      tabWidth: 2,
+      // vueIndentScriptAndStyle: false,
+      // singleQuote: true,
+      // semi: true,
+      // printWidth: 180,
+      // tabWidth: 2,
     })
     return [
       {
@@ -64,7 +68,7 @@ initMonaco(store)
 const lang = computed(() => (props.mode === 'css' ? 'css' : 'javascript'))
 const isFullScreen = ref(false)
 const replTheme = inject<Ref<'dark' | 'light'>>('theme')!
-
+monaco.languages.registerDocumentFormattingEditProvider('vue', formatProvider)
 onMounted(async () => {
   const theme = await import('./highlight').then((r) => r.registerHighlighter())
   ready.value = true
@@ -73,7 +77,7 @@ onMounted(async () => {
   if (!containerRef.value) {
     throw new Error('Cannot find containerRef')
   }
-  monaco.languages.registerDocumentFormattingEditProvider('vue', formatProvider)
+
   const editorInstance = monaco.editor.create(containerRef.value, {
     ...(props.readonly
       ? { value: props.value, language: lang.value }
