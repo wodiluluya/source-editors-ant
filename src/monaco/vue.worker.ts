@@ -91,24 +91,3 @@ self.onmessage = async (msg: MessageEvent<WorkerMessage>) => {
     }
   )
 }
-
-async function importTsFromCdn(tsVersion: string) {
-  const _module = globalThis.module
-  ;(globalThis as any).module = { exports: {} }
-  const tsUrl = `https://cdn.jsdelivr.net/npm/typescript@${tsVersion}/lib/typescript.js`
-  await import(/* @vite-ignore */ tsUrl)
-  const ts = globalThis.module.exports
-  globalThis.module = _module
-  return ts as typeof import('typescript')
-}
-
-async function fetchJson<T>(url: string) {
-  try {
-    const res = await fetch(url)
-    if (res.status === 200) {
-      return await res.json()
-    }
-  } catch {
-    // ignore
-  }
-}

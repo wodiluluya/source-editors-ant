@@ -34,7 +34,6 @@ const props = withDefaults(
 )
 const formatProvider: any = {
   provideDocumentFormattingEdits: (model: any) => {
-    debugger
     const code = model.getValue()
     const formattedCode = prettier.format(code, {
       plugins: [prettierVue],
